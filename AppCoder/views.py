@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from .models import curso
+from .models import Curso
 from django.http import HttpResponse
 # Create your views here.
 def curso(request, nombre, camada):
 
-    curso=curso(nombre=nombre, camada=camada)
+    curso=Curso(nombre=nombre, camada=camada)
     curso.save()
 
     return  HttpResponse(f""" 
