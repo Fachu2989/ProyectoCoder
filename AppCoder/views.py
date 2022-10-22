@@ -10,3 +10,22 @@ def curso(request, nombre, camada):
     return  HttpResponse(f""" 
         <p> curso: {curso.nombre} - camada:{curso.camada} agregado </p>
     """)
+
+def lista_curso(request):
+    lista=Curso.objects.all
+    return render(request, "lista_curso.html", {"lista cursos":lista})
+
+def inicio(request):
+    return render(request,"inicio.html")
+
+def cursos(request):
+    return render(request,"cursos.html")
+
+def profesores(request):
+    return render(request,"profesores.html")
+
+def estudiante(request):
+    return render(request,"estudiantes.html")
+
+def entregable(request):
+    return render(request,"entregable.html")
