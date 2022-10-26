@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=h, initial-scale=1.0">
-    <title>cursos</title>
-</head>
-<body>
-    <h1>
-        Vista de Cursos desde el template
-    </h1>
-</body>
-</html>
+{% extends 'padre.html' %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+    <h1>vista de Cursos </h1>    
+    <h4>Estos son los cursos que tenemos</h4>
+    <ul>
+        <li>mauricio cuello</li>
+        <li>lionel messi</li>
+        <li>pepe argento</li>
+    </ul>
+{% endblock contenidoQueCambia %}   
