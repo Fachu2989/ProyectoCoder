@@ -6,8 +6,10 @@
     <h1>vista de Cursos </h1>    
     <h4>Estos son los cursos que tenemos</h4>
     <ul>
-        <li>mauricio cuello</li>
-        <li>lionel messi</li>
-        <li>pepe argento</li>
+        
+        {% for curso in lista_cursos %}
+            <li>{{curso.nombre}} - {{curso.camada}}</li>
+        {% endfor %}
+            
     </ul>
 {% endblock contenidoQueCambia %}   
