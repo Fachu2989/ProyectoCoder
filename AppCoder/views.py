@@ -13,13 +13,14 @@ def curso(request, nombre, camada):
 
 def lista_curso(request):
     lista=Curso.objects.all
-    return render(request, "lista_curso.html", {"lista cursos":lista})
+    return render(request, "lista_curso.html", {"lista_cursos":lista})
 
 def inicio(request):
     return render(request,"inicio.html")
 
 def cursos(request):
-    return render(request,"cursos.html")
+    lista=Curso.objects.all
+    return render(request,"cursos.html", {"lista_cursos":lista})
 
 def profesores(request):
     return render(request,"profesores.html")
