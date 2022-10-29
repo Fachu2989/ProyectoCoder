@@ -1,3 +1,4 @@
+from contextlib import redirect_stderr, redirect_stdout
 from django.shortcuts import render
 from .models import Curso
 from django.http import HttpResponse
@@ -28,5 +29,12 @@ def profesores(request):
 def estudiante(request):
     return render(request,"estudiantes.html")
 
-def entregable(request):
-    return render(request,"entregable.html")
+def cursoFormulario(request):
+    
+    if request.method =="POST":
+        curso=Curso(nombre=request.POST.get("curso"), camada=request.POST.get("camada"))
+        curso.save()
+        #return redirect("Cursos") 
+        return render(request, "inicio.html")
+    else:    
+        return render(request, "cursoFormulario.html")
