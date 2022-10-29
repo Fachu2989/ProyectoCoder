@@ -1,6 +1,6 @@
-from msilib.schema import Patch
+
 from django.urls import path
-from .views import curso,lista_curso,cursos, estudiante, inicio, profesores
+from .views import curso, cursoFormulario,lista_curso,cursos, estudiante, inicio, profesores
 
 
 urlpatterns = [
@@ -9,6 +9,7 @@ urlpatterns = [
     path("cursos/", cursos, name="Cursos"),
     path("profesores/", profesores, name="Profesores"),
     path("estudiantes/", estudiante, name="Estudiantes"),
-    path("", inicio ),
+    path("", inicio, name="Inicio" ),
     path("lista-cursos/", lista_curso),
+    path("cursoFormulario/", cursoFormulario, name="cursoFormulario"),
 ]
