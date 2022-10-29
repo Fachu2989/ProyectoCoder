@@ -1,0 +1,17 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+    <form action="{% url "cursoFormulario" %}" method="post">{% csrf_token %}
+
+        <p>curso: <input type="text"name:"curso"/></p>
+
+        <p>camada: <input type="number"name:"camada"/></p>
+
+        <input type="submit" value="Enviar">
+
+    </form>
+
+{% endblock contenidoQueCambia %}  
