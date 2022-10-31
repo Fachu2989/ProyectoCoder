@@ -1,4 +1,3 @@
-from contextlib import redirect_stderr, redirect_stdout
 from django.shortcuts import render
 from .models import Curso
 from django.http import HttpResponse
