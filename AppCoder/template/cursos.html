@@ -10,7 +10,11 @@
         {% for curso in lista_cursos %}
             <li>{{curso.nombre}} - {{curso.camada}}</li>
         {% endfor %}
-            
+        
     </ul>
+
+    <h3>
+        <a href="{% url 'cursoFormulario' %}">Agregar curso</a>
+    </h3>
 {% endblock contenidoQueCambia %}   
 
