@@ -1,6 +1,6 @@
 
 from django.urls import path
-from .views import curso, cursoFormulario,lista_curso,cursos, estudiante, inicio, profesores
+from .views import curso, cursoFormulario,cursos, estudiante, inicio, profesores
 
 
 urlpatterns = [
