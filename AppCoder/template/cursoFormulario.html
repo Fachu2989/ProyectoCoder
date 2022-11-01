@@ -4,11 +4,11 @@
 
 {% block contenidoQueCambia %}
 
-    <form action="{% url "cursoFormulario" %}" method="post">{% csrf_token %}
+    <form action="{% url 'cursoFormulario' %}" method="POST"> {% csrf_token %}
 
-        <p>curso: <input type="text"name:"curso"/></p>
+        <p>Curso: <input type="text" name="curso"></p>
 
-        <p>camada: <input type="number"name:"camada"/></p>
+        <p>Camada: <input type="number"name="camada"></p>
 
         <input type="submit" value="Enviar">
 
