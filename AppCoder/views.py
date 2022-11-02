@@ -1,4 +1,6 @@
 from django.shortcuts import render,redirect
+
+from .form import CursoFormulario
 from .models import Curso
 from django.http import HttpResponse
 # Create your views here.
@@ -11,9 +13,8 @@ def curso(request, nombre, camada):
         <p> curso: {curso.nombre} - camada:{curso.camada} agregado </p>
     """)
 
-def lista_curso(request):
-    lista=Curso.objects.all
-    return render(request, "lista_curso.html", {"lista_cursos":lista})
+
+
 
 def inicio(request):
     return render(request,"inicio.html")
@@ -29,13 +30,23 @@ def estudiante(request):
     return render(request,"estudiantes.html")
 
 def cursoFormulario(request):
-    #print("method:",request.method)
-    #print("post:", request.POST)
-
 
     if request.method =="POST":
-        curso=Curso(nombre=request.POST["curso"],camada=request.POST["camada"])
-        curso.save()
-        return redirect("Cursos")
-      
-    return render(request, "cursoFormulario.html")
+        mi_formulario= CursoFormulario(request.POST)
+        if mi_formulario.is_valid():
+            data=mi_formulario.cleaned_data
+            curso=Curso(nombre=data["curso"],camada=data["camada"])
+            curso.save()
+            return redirect("Cursos")
+    else: 
+        mi_formulario=CursoFormulario()
+     
+    return render(request, "cursoFormulario.html",{'mi_formulario': mi_formulario})
+
+def busqueda_camada(request):
+    return render(request, 'busqueda_camada.html')
+
+def buscar(request):
+    camada_buscada= request.GET['camada']
+    curso= Curso.objects.get(camada=camada_buscada)
+    return render(request,'resultado_busqueda.html',{"curso":curso, "camada": camada_buscada})

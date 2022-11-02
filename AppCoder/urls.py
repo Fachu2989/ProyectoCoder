@@ -1,6 +1,6 @@
 
 from django.urls import path
-from .views import curso, cursoFormulario,cursos, estudiante, inicio, profesores
+from .views import buscar, busqueda_camada, curso, cursoFormulario,cursos, estudiante, inicio, profesores
 
 
 urlpatterns = [
@@ -10,4 +10,6 @@ urlpatterns = [
     path("estudiantes/", estudiante, name="Estudiantes"),
     path("", inicio, name="Inicio" ),
     path("cursoFormulario/", cursoFormulario, name="cursoFormulario"),
+    path("busqueda_camada/", busqueda_camada, name="busqueda_camada"),
+    path("buscar/", buscar, name="buscar"),
 ]
