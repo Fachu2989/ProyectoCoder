@@ -1,12 +1,17 @@
 from django.shortcuts import render,redirect
-from .form import CursoFormulario,ProfesorFormulario
-from .models import Curso,Profesor, Estudiante
+from .form import CursoFormulario,ProfesorFormulario,UserEditForm
+from .models import Curso,Profesor, Estudiante, Avatar
 from django.http import HttpResponse
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin 
 # Create your views here.
+
 def curso(request, nombre, camada):
 
     curso=Curso(nombre=nombre, camada=camada)
@@ -20,7 +25,8 @@ def curso(request, nombre, camada):
 
 
 def inicio(request):
-    return render(request,"inicio.html")
+    avatar=Avatar.objects.get(user=request.user)
+    return render(request,"inicio.html",{'url':avatar.imagen.url})
 
 def cursos(request):
     lista=Curso.objects.all
@@ -29,6 +35,7 @@ def cursos(request):
 def profesores(request):
     return render(request,"profesores.html")
 
+@login_required
 def estudiante(request):
     return render(request,"estudiantes.html")
 
@@ -117,7 +124,7 @@ def editar_profesor(request, id):
 
 
 #CRUD vista basada en clase (curso)
-class CursoList(ListView):
+class CursoList(LoginRequiredMixin ,ListView):
 
     model = Curso
     template_name = 'curso_list.html'
@@ -149,3 +156,69 @@ class CursoDelete(DeleteView):
     template_name = 'curso_delete.html'
     success_url = '/app-coder/'
  
+
+
+
+def loginView(request):
+    if request.method =="POST":
+        mi_formulario= AuthenticationForm(request,data=request.POST)
+        if mi_formulario.is_valid():
+            data=mi_formulario.cleaned_data
+            usuario=data["username"]
+            psw=data["password"]
+            user= authenticate(username=usuario, password=psw)
+            if user:
+                 login(request,user)
+                 return render(request, "inicio.html",{'mensaje': f'bienvenido {usuario}'})
+            else:
+                return render(request, "inicio.html",{'mensaje': f'Error datos incorrectos'})
+        
+        return render(request, "inicio.html",{'mensaje': f'Error formulario invalido'})
+
+    else: 
+        mi_formulario=AuthenticationForm()
+     
+    return render(request, "login.html",{'mi_formulario': mi_formulario})
+
+
+
+def registro(request):
+    if request.method =="POST":
+        form= UserCreationForm(request.POST)
+        if form.is_valid():
+            username=form.cleaned_data["username"]
+            form.save()
+            return render(request, "inicio.html",{'mensaje': f'Usuario {username} creado con éxito'})
+        else: 
+            return render(request, "inicio.html",{'mensaje': f'Error al crear un usuario'})
+    else:
+        form=UserCreationForm()
+        return render(request, "registro.html",{'form': form})
+    
+
+
+    
+def editar_perfil(request):
+    usuario=request.user
+     
+
+    if request.method == 'POST':
+
+        miformulario = UserEditForm(request.POST)
+
+        if miformulario.is_valid():
+
+            data = miformulario.cleaned_data
+
+            usuario.first_name = data["first_name"]
+            usuario.last_name = data["last_name"]
+            usuario.email = data["email"]
+
+            usuario.save()
+
+            return render(request, "inicio.html",{'mensaje': f'Datos actualizados'})
+    
+    else:
+        miformulario=UserEditForm(intance=request.user)
+
+    return render(request, "editarPerfil.html", {"miFormulario": miformulario})

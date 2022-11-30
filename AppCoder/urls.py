@@ -1,7 +1,7 @@
 
 from django.urls import path
-from .views import CursoList,CursoCreate,CursoUpdate,CursoDelete,CursoDetail, buscar,editar_profesor,eliminaProfesor,crea_profesor, busqueda_camada, curso, cursoFormulario,cursos, estudiante, inicio, profesores,listaProfesores
-
+from .views import editar_perfil,registro, loginView, CursoList,CursoCreate,CursoUpdate,CursoDelete,CursoDetail, buscar,editar_profesor,eliminaProfesor,crea_profesor, busqueda_camada, curso, cursoFormulario,cursos, estudiante, inicio, profesores,listaProfesores
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path("agrega/<nombre>/<camada>", curso),
@@ -25,4 +25,10 @@ urlpatterns = [
     path('creaCurso/', CursoCreate.as_view(), name="CreaCurso"),
     path('actualizarCurso/<pk>', CursoUpdate.as_view(), name="ActualizaCursos"),
     path('eliminarCurso/<pk>', CursoDelete.as_view(), name="EliminaCursos"),
+
+    #login
+    path('login/', loginView, name="Login"),
+    path('registrar/', registro, name="Registrar"),
+    path('logout/', LogoutView.as_view(template_name="logout.html"), name="Logout"),
+    path('editarPerfil/', editar_perfil, name="editarPerfil"),
 ]
